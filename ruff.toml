@@ -38,8 +38,6 @@ target-version = "py38"
 select = ["E", "F", "W", "I", "N", "UP", "YTT", "ANN", "S", "BLE", "B", "A", "COM", "C4", "DTZ", "T10", "ISC", "ICN", "G", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF", "SIM", "TID", "ARG", "PTH", "ERA", "PL", "TRY", "RUF"]
 
 ignore = [
-    "ANN101",  # Missing type annotation for self in method
-    "ANN102",  # Missing type annotation for cls in classmethod
     "ANN401",  # Dynamically typed expressions (typing.Any) are disallowed
     "S101",    # Use of assert detected (we use it in tests)
     "PLR0913", # Too many arguments to function call
