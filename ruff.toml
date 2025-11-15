@@ -1,7 +1,6 @@
 # Ruff configuration for pandas-toon
 # https://docs.astral.sh/ruff/
 
-[tool.ruff]
 # Exclude common directories
 exclude = [
     ".bzr",
@@ -34,7 +33,7 @@ indent-width = 4
 # Assume Python 3.8
 target-version = "py38"
 
-[tool.ruff.lint]
+[lint]
 # Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
 select = ["E", "F", "W", "I", "N", "UP", "YTT", "ANN", "S", "BLE", "B", "A", "COM", "C4", "DTZ", "T10", "ISC", "ICN", "G", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF", "SIM", "TID", "ARG", "PTH", "ERA", "PL", "TRY", "RUF"]
 
@@ -54,7 +53,7 @@ unfixable = []
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
-[tool.ruff.format]
+[format]
 # Like Black, use double quotes for strings.
 quote-style = "double"
 
@@ -67,7 +66,7 @@ skip-magic-trailing-comma = false
 # Like Black, automatically detect the appropriate line ending.
 line-ending = "auto"
 
-[tool.ruff.lint.per-file-ignores]
+[lint.per-file-ignores]
 "tests/**/*.py" = [
     "S101",    # Assert allowed in tests
     "ANN",     # Type annotations not required in tests
@@ -79,5 +78,5 @@ line-ending = "auto"
     "ANN",     # Type annotations not required in examples
 ]
 
-[tool.ruff.lint.pydocstyle]
+[lint.pydocstyle]
 convention = "google"
