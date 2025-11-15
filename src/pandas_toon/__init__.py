@@ -7,10 +7,10 @@ the Token-Oriented Object Notation (TOON) format in pandas DataFrames.
 
 __version__ = "0.1.0"
 
-from pandas_toon.io import read_toon
 from pandas_toon.core import register_dataframe_accessor
+from pandas_toon.io import read_toon
 
 # Register DataFrame.to_toon() method
 register_dataframe_accessor()
 
-__all__ = ["read_toon", "__version__"]
+__all__ = ["__version__", "read_toon"]
