@@ -19,52 +19,50 @@ class TestToonParser:
     
     def test_parse_simple_toon(self):
         """Test parsing a simple TOON format."""
-        content = """name|age|city
----
-Alice|30|New York
-Bob|25|London"""
+        content = """data[2]{name,age,city}:
+  Alice,30,New York
+  Bob,25,London"""
         
         result = parse_toon(content)
         
         assert result['columns'] == ['name', 'age', 'city']
+        assert result['declared_length'] == 2
         assert len(result['data']) == 2
         assert result['data'][0] == ['Alice', 30, 'New York']
         assert result['data'][1] == ['Bob', 25, 'London']
     
     def test_parse_with_table_name(self):
         """Test parsing TOON with table name."""
-        content = """@users
-name|age
----
-Alice|30
-Bob|25"""
+        content = """users[2]{name,age}:
+  Alice,30
+  Bob,25"""
         
         result = parse_toon(content)
         
         assert result['table_name'] == 'users'
         assert result['columns'] == ['name', 'age']
+        assert result['declared_length'] == 2
         assert len(result['data']) == 2
     
     def test_parse_without_separator(self):
-        """Test parsing TOON without --- separator."""
-        content = """name|age
-Alice|30
-Bob|25"""
+        """Test parsing TOON with proper metadata line."""
+        content = """data[2]{name,age}:
+  Alice,30
+  Bob,25"""
         
         result = parse_toon(content)
         
         assert result['columns'] == ['name', 'age']
-        # Without separator, all lines after header are treated as data
+        assert result['declared_length'] == 2
         assert len(result['data']) == 2
         assert result['data'][0] == ['Alice', 30]
         assert result['data'][1] == ['Bob', 25]
     
     def test_parse_null_values(self):
         """Test parsing null/empty values."""
-        content = """name|age|city
----
-Alice||New York
-Bob|25|"""
+        content = """data[2]{name,age,city}:
+  Alice,,New York
+  Bob,25,"""
         
         result = parse_toon(content)
         
@@ -73,10 +71,9 @@ Bob|25|"""
     
     def test_parse_boolean_values(self):
         """Test parsing boolean values."""
-        content = """name|active
----
-Alice|true
-Bob|false"""
+        content = """data[2]{name,active}:
+  Alice,true
+  Bob,false"""
         
         result = parse_toon(content)
         
@@ -85,10 +82,9 @@ Bob|false"""
     
     def test_parse_numeric_values(self):
         """Test parsing numeric values."""
-        content = """name|age|score
----
-Alice|30|95.5
-Bob|25|88.0"""
+        content = """data[2]{name,age,score}:
+  Alice,30,95.5
+  Bob,25,88.0"""
         
         result = parse_toon(content)
         
@@ -111,10 +107,9 @@ Bob|25|88.0"""
         
         result = serialize_toon(columns, data)
         
-        assert 'name|age|city' in result
-        assert '---' in result
-        assert 'Alice|30|New York' in result
-        assert 'Bob|25|London' in result
+        assert 'data[2]{name,age,city}:' in result
+        assert 'Alice,30,New York' in result
+        assert 'Bob,25,London' in result
     
     def test_serialize_with_table_name(self):
         """Test serializing with table name."""
@@ -123,8 +118,8 @@ Bob|25|88.0"""
         
         result = serialize_toon(columns, data, table_name='users')
         
-        assert result.startswith('@users')
-        assert 'name|age' in result
+        assert result.startswith('users[1]{name,age}:')
+        assert 'Alice,30' in result
     
     def test_serialize_null_values(self):
         """Test serializing null values."""
@@ -134,8 +129,8 @@ Bob|25|88.0"""
         result = serialize_toon(columns, data)
         
         lines = result.split('\n')
-        assert 'Alice|' in result
-        assert 'Bob|' in result
+        assert 'Alice,' in result
+        assert 'Bob,' in result
     
     def test_serialize_boolean_values(self):
         """Test serializing boolean values."""
@@ -144,8 +139,8 @@ Bob|25|88.0"""
         
         result = serialize_toon(columns, data)
         
-        assert 'Alice|true' in result
-        assert 'Bob|false' in result
+        assert 'Alice,true' in result
+        assert 'Bob,false' in result
 
 
 class TestReadToon:
@@ -153,10 +148,9 @@ class TestReadToon:
     
     def test_read_toon_from_string_io(self):
         """Test reading TOON from StringIO."""
-        toon_data = """name|age|city
----
-Alice|30|New York
-Bob|25|London"""
+        toon_data = """data[2]{name,age,city}:
+  Alice,30,New York
+  Bob,25,London"""
         
         df = read_toon(StringIO(toon_data))
         
@@ -169,11 +163,9 @@ Bob|25|London"""
     
     def test_read_toon_from_file(self):
         """Test reading TOON from a file."""
-        toon_data = """@test_data
-name|score
----
-Alice|95.5
-Bob|88.0"""
+        toon_data = """test_data[2]{name,score}:
+  Alice,95.5
+  Bob,88.0"""
         
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.toon') as f:
             f.write(toon_data)
@@ -191,10 +183,9 @@ Bob|88.0"""
     
     def test_read_toon_with_null_values(self):
         """Test reading TOON with null values."""
-        toon_data = """name|age|city
----
-Alice||New York
-Bob|25|"""
+        toon_data = """data[2]{name,age,city}:
+  Alice,,New York
+  Bob,25,"""
         
         df = read_toon(StringIO(toon_data))
         
@@ -215,10 +206,9 @@ class TestToToon:
         result = df.to_toon()
         
         assert isinstance(result, str)
-        assert 'name|age' in result
-        assert '---' in result
-        assert 'Alice|30' in result
-        assert 'Bob|25' in result
+        assert 'data[2]{name,age}:' in result
+        assert 'Alice,30' in result
+        assert 'Bob,25' in result
     
     def test_to_toon_writes_to_file(self):
         """Test to_toon writes to file."""
@@ -240,9 +230,9 @@ class TestToToon:
             with open(temp_path, 'r') as f:
                 content = f.read()
             
-            assert 'name|age|city' in content
-            assert 'Alice|30|New York' in content
-            assert 'Bob|25|London' in content
+            assert 'data[2]{name,age,city}:' in content
+            assert 'Alice,30,New York' in content
+            assert 'Bob,25,London' in content
         finally:
             os.unlink(temp_path)
     
@@ -255,7 +245,7 @@ class TestToToon:
         
         result = df.to_toon(table_name='users')
         
-        assert result.startswith('@users')
+        assert result.startswith('users[1]{name,age}:')
     
     def test_to_toon_with_null_values(self):
         """Test to_toon handles null values."""
@@ -266,8 +256,9 @@ class TestToToon:
         
         result = df.to_toon()
         
-        assert 'Alice|30' in result
-        assert 'Bob|' in result
+        # Note: pandas converts None to NaN for numeric columns
+        assert 'Alice,' in result
+        assert 'Bob,' in result
 
 
 class TestRoundTrip:

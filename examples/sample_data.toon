@@ -1,8 +1,6 @@
-@employees
-name|department|salary|years_experience|active
----
-Alice Johnson|Engineering|95000.0|5|true
-Bob Smith|Marketing|75000.0|3|true
-Charlie Brown|Sales|85000.0|7|true
-Diana Prince|Engineering|105000.0|8|true
-Eve Davis|HR|65000.0|2|false
+employees[5]{name,age,city,salary,department}:
+  Alice,30,New York,95000.5,Engineering
+  Bob,25,London,75000.0,Marketing
+  Charlie,35,Paris,85000.75,Sales
+  Diana,28,Tokyo,90000.0,Engineering
+  Eve,32,Berlin,82000.25,HR
