@@ -1,0 +1,8 @@
+@employees
+name|department|salary|years_experience|active
+---
+Alice Johnson|Engineering|95000.0|5|true
+Bob Smith|Marketing|75000.0|3|true
+Charlie Brown|Sales|85000.0|7|true
+Diana Prince|Engineering|105000.0|8|true
+Eve Davis|HR|65000.0|2|false
