@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "TOON (Token-Oriented Object Notation) format support for pandas"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "Apache-2.0"}
+license = "Apache-2.0"
 authors = [
     {name = "pandas-toon contributors"}
 ]
@@ -16,7 +16,6 @@ keywords = ["pandas", "toon", "llm", "data", "serialization"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -33,11 +32,18 @@ dependencies = [
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+    "build>=1.0.0",
+    "twine>=4.0.0",
 ]
 
 [project.urls]
 Homepage = "https://github.com/AMSeify/pandas-toon"
 Repository = "https://github.com/AMSeify/pandas-toon"
+Documentation = "https://github.com/AMSeify/pandas-toon#readme"
+"Bug Tracker" = "https://github.com/AMSeify/pandas-toon/issues"
+Changelog = "https://github.com/AMSeify/pandas-toon/blob/main/CHANGELOG.md"
 
 [project.entry-points."pandas_io"]
 toon = "pandas_toon:read_toon"

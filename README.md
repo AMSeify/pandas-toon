@@ -1,7 +1,9 @@
 # pandas-toon
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/downloads/)
+[![PyPI version](https://badge.fury.io/py/pandas-toon.svg)](https://badge.fury.io/py/pandas-toon)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
+[![Tests](https://github.com/AMSeify/pandas-toon/actions/workflows/test.yml/badge.svg)](https://github.com/AMSeify/pandas-toon/actions/workflows/test.yml)
 
 TOON (Token-Oriented Object Notation) format support for pandas DataFrames.
 
@@ -254,8 +256,8 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 ## Links
 
 - **GitHub Repository**: https://github.com/AMSeify/pandas-toon
+- **PyPI Package**: https://pypi.org/project/pandas-toon/
 - **TOON Format Specification**: https://github.com/toon-format/toon
-- **PyPI Package**: Coming soon
 
 ## Credits
 
