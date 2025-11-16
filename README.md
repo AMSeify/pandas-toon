@@ -1,5 +1,9 @@
 # pandas-toon
 
+![pandas-toon](images/pandas_toon.png)
+
+
+
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/pandas-toon.svg)](https://badge.fury.io/py/pandas-toon)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
